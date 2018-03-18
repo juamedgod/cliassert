@@ -54,7 +54,7 @@ func (r CmdResult) AssertCode(t *testing.T, code int) bool {
 	return assert.Equal(t, code, r.code, "Expected %d code but got %d", code, r.code)
 }
 
-// AssertSuccess asserts that the command suceeded (0 exit code)
+// AssertSuccess asserts that the command succeeded (0 exit code)
 func (r CmdResult) AssertSuccess(t *testing.T) bool {
 	return assert.True(t, r.Success(), "Expected command to success but got code=%d stderr=%s", r.code, r.stderr)
 }
