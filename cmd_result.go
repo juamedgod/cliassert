@@ -36,6 +36,10 @@ func (r CmdResult) Success() bool {
 // AssertErrorMatch asserts that the command failed and its stderr matches the provided regexp
 func (r CmdResult) AssertErrorMatch(t *testing.T, re interface{}) bool {
 	if r.AssertError(t) {
+		if s, ok := re.(string); ok && s == "" {
+			return assert.Equal(t, s, r.stderr)
+		}
+
 		return assert.Regexp(t, re, r.stderr)
 	}
 	return true
@@ -44,6 +48,9 @@ func (r CmdResult) AssertErrorMatch(t *testing.T, re interface{}) bool {
 // AssertSuccessMatch asserts that the command succeeded and its stdout matches the provided regexp
 func (r CmdResult) AssertSuccessMatch(t *testing.T, re interface{}) bool {
 	if r.AssertSuccess(t) {
+		if s, ok := re.(string); ok && s == "" {
+			return assert.Equal(t, s, r.stdout)
+		}
 		return assert.Regexp(t, re, r.stdout)
 	}
 	return true
